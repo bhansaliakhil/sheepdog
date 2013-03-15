@@ -106,6 +106,9 @@ static int cluster_new_vdi(struct request *req)
 	if (!iocb.nr_copies)
 		iocb.nr_copies = sys->nr_copies;
 
+	if (iocb.nr_copies > req->vinfo->nr_nodes)
+		return SD_RES_INVALID_PARMS;
+
 	ret = add_vdi(&iocb, &vid);
 
 	rsp->vdi.vdi_id = vid;
